@@ -1,0 +1,140 @@
+-- Заполнение таблицы категорий
+INSERT INTO categories (category_name, description) VALUES
+    ('Шоколад', 'Молочный и темный шоколад под маркой Яшкино'),
+    ('Карамель', 'Карамельные конфеты, леденцы и сладости'),
+    ('Печенье', 'Ассортимент печенья под брендом Яшкино'),
+    ('Зефир', 'Легкие и воздушные зефиры Яшкино'),
+    ('Марципан', 'Марципановые изделия Яшкино'),
+    ('Конфеты', 'Разнообразные конфеты Яшкино'),
+    ('Жевательные конфеты', 'Жевательные конфеты под маркой Яшкино'),
+    ('Торт', 'Торты и пирожные от Яшкино');
+
+-- Заполнение таблицы поставщиков
+INSERT INTO suppliers (company_name, contact_name, address, city, country, phone) VALUES
+    ('Яшкино', 'Алексей Васильев', 'ул. Сладкая, 10', 'Москва', 'Россия', '+7-495-111-2233'),
+    ('Сладкие Поставки', 'Марина Смирнова', 'ул. Леденцовая, 5', 'Санкт-Петербург', 'Россия', '+7-812-987-6543'),
+    ('Конфетный Завод', 'Петр Петров', 'ул. Сахарная, 12', 'Томск', 'Россия', '+7-382-111-2233'),
+    ('Сладкая Вершина', 'Светлана Орлова', 'ул. Ванильная, 8', 'Ростов-на-Дону', 'Россия', '+7-863-444-5566');
+
+-- Заполнение таблицы продуктов
+INSERT INTO products (product_name, supplier_id, category_id, quantity_per_unit, unit_price, units_in_stock, units_on_order) VALUES
+    ('Шоколад молочный', 1, 1, '100 г', 50.00, 200, 50),
+    ('Шоколад темный', 1, 1, '100 г', 55.00, 150, 40),
+    ('Карамель с начинкой', 2, 2, '500 г', 120.00, 150, 30),
+    ('Карамель леденцовая', 2, 2, '200 г', 100.00, 300, 70),
+    ('Печенье овсяное', 3, 3, '1 кг', 300.00, 100, 20),
+    ('Печенье с орехами', 3, 3, '1 кг', 350.00, 120, 25),
+    ('Зефир ванильный', 1, 4, '300 г', 180.00, 80, 15),
+    ('Зефир клубничный', 4, 4, '300 г', 190.00, 50, 10),
+    ('Марципановые конфеты', 3, 5, '150 г', 220.00, 70, 30),
+    ('Марципановые сладости', 4, 5, '200 г', 250.00, 60, 15),
+    ('Жевательные конфеты', 1, 6, '250 г', 80.00, 250, 60),
+    ('Конфеты ассорти', 2, 6, '300 г', 150.00, 200, 50),
+    ('Торт шоколадный', 3, 7, '1 шт', 500.00, 30, 5),
+    ('Торт ванильный', 4, 7, '1 шт', 450.00, 40, 8);
+
+-- Заполнение таблицы складов
+INSERT INTO warehouses (warehouse_name, location, manager_id) VALUES
+    ('Главный склад Яшкино', 'Москва, ул. Логистическая, 10', 1),
+    ('Склад Северо-Запад', 'Санкт-Петербург, ул. Пушкинская, 20', 2),
+    ('Склад Сибирь', 'Томск, ул. Кармелитовая, 25', 3),
+    ('Склад Юг', 'Ростов-на-Дону, ул. Южная, 15', 4);
+
+-- Заполнение таблицы связи складов и продуктов
+INSERT INTO warehouse_products (warehouse_id, product_id, stock_quantity) VALUES
+    (1, 1, 150),
+    (1, 2, 130),
+    (1, 3, 100),
+    (1, 4, 200),
+    (1, 5, 80),
+    (1, 6, 220),
+    (1, 7, 120),
+    (1, 8, 50),
+    (2, 9, 70),
+    (2, 10, 60),
+    (2, 11, 250),
+    (2, 12, 180),
+    (3, 13, 30),
+    (3, 14, 50),
+    (3, 6, 300),
+    (4, 1, 100),
+    (4, 13, 40);
+
+-- Заполнение таблицы клиентов
+INSERT INTO customers (customer_id, company_name, contact_name, address, city, country, phone) VALUES
+    ('CUST1', 'Магазин Сладких Угощений', 'Иван Иванов', 'ул. Сладкая, 20', 'Москва', 'Россия', '+7-495-123-4567'),
+    ('CUST2', 'Кондитерская Приятность', 'Елена Иванова', 'ул. Печенье, 10', 'Санкт-Петербург', 'Россия', '+7-812-765-4321');
+
+-- Заполнение таблицы демографической информации клиентов
+INSERT INTO customer_demographics (customer_type_id, customer_desc) VALUES
+    ('Розница', 'Магазины розничной торговли'),
+    ('Оптовик', 'Оптовые покупатели');
+
+-- Заполнение таблицы связи клиентов и демографической информации
+INSERT INTO customer_customer_demo (customer_id, customer_type_id) VALUES
+    ('CUST1', 'Розница'),
+    ('CUST2', 'Оптовик');
+
+-- Заполнение таблицы сотрудников
+INSERT INTO employees (last_name, first_name, title, hire_date, address, city, country, home_phone) VALUES
+    ('Сидоров', 'Алексей', 'Менеджер', '2022-03-10', 'ул. Главная, 5', 'Москва', 'Россия', '+7-495-333-4455'),
+    ('Петров', 'Никита', 'Логист', '2021-08-15', 'ул. Логистическая, 8', 'Санкт-Петербург', 'Россия', '+7-812-666-7788');
+
+-- Заполнение таблицы территорий
+INSERT INTO territories (territory_id, territory_description) VALUES
+    ('RU-01', 'Москва и Московская область'),
+    ('RU-02', 'Северо-Западный регион России');
+
+-- Заполнение таблицы связи сотрудников и территорий
+INSERT INTO employee_territories (employee_id, territory_id) VALUES
+    (1, 'RU-01'),
+    (2, 'RU-02');
+
+-- Заполнение таблицы поставок
+INSERT INTO shippers (company_name, phone) VALUES
+    ('Яшкино Логистика', '+7-495-444-5566'),
+    ('Транспорт Яшкино', '+7-812-777-8888');
+
+-- Заполнение таблицы заказов
+INSERT INTO orders (customer_id, employee_id, order_date, required_date, shipped_date, ship_via, freight, warehouse_id, ship_name, ship_address, ship_city, ship_country) VALUES
+    ('CUST1', 1, '2024-11-01', '2024-11-05', '2024-11-03', 1, 120.50, 1, 'Магазин Сладких Угощений', 'ул. Сладкая, 20', 'Москва', 'Россия'),
+    ('CUST2', 2, '2024-11-10', '2024-11-12', '2024-11-11', 2, 210.75, 2, 'Кондитерская Приятность', 'ул. Печенье, 10', 'Санкт-Петербург', 'Россия');
+
+-- Заполнение таблицы деталей заказов
+INSERT INTO order_details (order_id, product_id, unit_price, quantity, discount) VALUES
+    (1, 1, 50.00, 2, 0),
+    (1, 4, 180.00, 3, 0),
+    (2, 5, 300.00, 1, 0),
+    (2, 7, 120.00, 5, 0);
+
+-- Вывод всех данных из каждой таблицы
+SELECT * FROM categories;
+SELECT * FROM suppliers;
+SELECT * FROM products;
+SELECT * FROM warehouses;
+SELECT * FROM warehouse_products;
+SELECT * FROM customers;
+SELECT * FROM customer_demographics;
+SELECT * FROM customer_customer_demo;
+SELECT * FROM employees;
+SELECT * FROM territories;
+SELECT * FROM employee_territories;
+SELECT * FROM shippers;
+SELECT * FROM orders;
+SELECT * FROM order_details;
+
+-- Очистка таблиц с обнулением счетчиков
+TRUNCATE TABLE order_details RESTART IDENTITY CASCADE;
+TRUNCATE TABLE orders RESTART IDENTITY CASCADE;
+TRUNCATE TABLE shippers RESTART IDENTITY CASCADE;
+TRUNCATE TABLE employee_territories RESTART IDENTITY CASCADE;
+TRUNCATE TABLE territories RESTART IDENTITY CASCADE;
+TRUNCATE TABLE employees RESTART IDENTITY CASCADE;
+TRUNCATE TABLE customer_customer_demo RESTART IDENTITY CASCADE;
+TRUNCATE TABLE customer_demographics RESTART IDENTITY CASCADE;
+TRUNCATE TABLE customers RESTART IDENTITY CASCADE;
+TRUNCATE TABLE warehouse_products RESTART IDENTITY CASCADE;
+TRUNCATE TABLE warehouses RESTART IDENTITY CASCADE;
+TRUNCATE TABLE products RESTART IDENTITY CASCADE;
+TRUNCATE TABLE suppliers RESTART IDENTITY CASCADE;
+TRUNCATE TABLE categories RESTART IDENTITY CASCADE;

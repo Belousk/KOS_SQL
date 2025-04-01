@@ -1,0 +1,129 @@
+-- Создание таблицы категорий продукции
+CREATE TABLE categories (
+    category_id SERIAL PRIMARY KEY,
+    category_name VARCHAR(255) NOT NULL,
+    description TEXT
+);
+
+-- Создание таблицы поставщиков
+CREATE TABLE suppliers (
+    supplier_id SERIAL PRIMARY KEY,
+    company_name VARCHAR(255) NOT NULL,
+    contact_name VARCHAR(255),
+    address TEXT,
+    city VARCHAR(100),
+    country VARCHAR(100),
+    phone VARCHAR(20)
+);
+
+-- Создание таблицы продуктов
+CREATE TABLE products (
+    product_id SERIAL PRIMARY KEY,
+    product_name VARCHAR(255) NOT NULL,
+    supplier_id INT REFERENCES suppliers(supplier_id),
+    category_id INT REFERENCES categories(category_id),
+    quantity_per_unit VARCHAR(50),
+    unit_price DECIMAL(10, 2),
+    units_in_stock INT,
+    units_on_order INT
+);
+
+-- Создание таблицы складов
+CREATE TABLE warehouses (
+    warehouse_id SERIAL PRIMARY KEY,
+    warehouse_name VARCHAR(255) NOT NULL,
+    location TEXT,
+    manager_id INT
+);
+
+-- Создание таблицы связи складов и продуктов
+CREATE TABLE warehouse_products (
+    warehouse_id INT REFERENCES warehouses(warehouse_id),
+    product_id INT REFERENCES products(product_id),
+    stock_quantity INT,
+    PRIMARY KEY (warehouse_id, product_id)
+);
+
+-- Создание таблицы клиентов
+CREATE TABLE customers (
+    customer_id VARCHAR(20) PRIMARY KEY,
+    company_name VARCHAR(255),
+    contact_name VARCHAR(255),
+    address TEXT,
+    city VARCHAR(100),
+    country VARCHAR(100),
+    phone VARCHAR(20)
+);
+
+-- Создание таблицы демографической информации клиентов
+CREATE TABLE customer_demographics (
+    customer_type_id VARCHAR(50) PRIMARY KEY,
+    customer_desc TEXT
+);
+
+-- Создание таблицы связи клиентов и демографической информации
+CREATE TABLE customer_customer_demo (
+    customer_id VARCHAR(20) REFERENCES customers(customer_id),
+    customer_type_id VARCHAR(50) REFERENCES customer_demographics(customer_type_id),
+    PRIMARY KEY (customer_id, customer_type_id)
+);
+
+-- Создание таблицы сотрудников
+CREATE TABLE employees (
+    employee_id SERIAL PRIMARY KEY,
+    last_name VARCHAR(255),
+    first_name VARCHAR(255),
+    title VARCHAR(255),
+    hire_date DATE,
+    address TEXT,
+    city VARCHAR(100),
+    country VARCHAR(100),
+    home_phone VARCHAR(20)
+);
+
+-- Создание таблицы территорий
+CREATE TABLE territories (
+    territory_id VARCHAR(20) PRIMARY KEY,
+    territory_description TEXT
+);
+
+-- Создание таблицы связи сотрудников и территорий
+CREATE TABLE employee_territories (
+    employee_id INT REFERENCES employees(employee_id),
+    territory_id VARCHAR(20) REFERENCES territories(territory_id),
+    PRIMARY KEY (employee_id, territory_id)
+);
+
+-- Создание таблицы поставок
+CREATE TABLE shippers (
+    shipper_id SERIAL PRIMARY KEY,
+    company_name VARCHAR(255),
+    phone VARCHAR(20)
+);
+
+-- Создание таблицы заказов
+CREATE TABLE orders (
+    order_id SERIAL PRIMARY KEY,
+    customer_id VARCHAR(20) REFERENCES customers(customer_id),
+    employee_id INT REFERENCES employees(employee_id),
+    order_date DATE,
+    required_date DATE,
+    shipped_date DATE,
+    ship_via INT REFERENCES shippers(shipper_id),
+    freight DECIMAL(10, 2),
+    warehouse_id INT REFERENCES warehouses(warehouse_id),
+    ship_name VARCHAR(255),
+    ship_address TEXT,
+    ship_city VARCHAR(100),
+    ship_country VARCHAR(100)
+);
+
+-- Создание таблицы деталей заказов
+CREATE TABLE order_details (
+    order_detail_id SERIAL PRIMARY KEY,
+    order_id INT REFERENCES orders(order_id),
+    product_id INT REFERENCES products(product_id),
+    unit_price DECIMAL(10, 2),
+    quantity INT,
+    discount DECIMAL(5, 2)
+);
